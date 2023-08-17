@@ -67,12 +67,13 @@ if response.status_code == 200:
                 }
 
                 print (f"{name} founded {founding_year} funding: {total_funding}")
-                # print(f"span_elements: {span_text}")
-                # break
+
 else:
     print(f"Failed to retrieve the page. Status code: {response.status_code}")
 
-# PART 2: Make dataframe
+# PART 2: Write out to csv
+
+# Option 1: Pandas Dataframes
 
 # Create lists to hold the data for each column
 subcategories = []
@@ -92,7 +93,6 @@ for _, item in DATA_DICT.items():
     subcategories.append(item['subcategory']),
     founding_years.append(item['founding_year'])
     total_fundings.append(item['total_funding'])
-    # print(f"{item['name']} is in {item['category']}")
 
 # Create a Pandas DataFrame
 df = pd.DataFrame({
@@ -107,9 +107,14 @@ df = pd.DataFrame({
 
 # Write the DataFrame to a CSV file
 csv_filename = 'output.csv'
+
+# UNCOMMENT THIS LINE TO WRITE DF OUT TO CSV
 # df.to_csv(csv_filename) 
 
-# # write data dict to csv...
+# UNCOMMENT THIS SECTION TO WRITE DATA_DICT DIRECTLY TO CSV W/O PD.DF 
+
+# # Option 2: python csv library
+
 # csv_filename = 'output.csv'
 
 # # Open the CSV file in write mode
