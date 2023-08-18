@@ -33,7 +33,7 @@ if response.status_code == 200:
 
             # get card
             card_list = h3_element.find_next_siblings('ul')[0]
-            card_elements = subcategory_list.find_all_next('li')
+            card_elements = card_list.find_all_next('li')
 
             for card_element in card_elements:
                 
@@ -41,20 +41,20 @@ if response.status_code == 200:
                 url = card_element.find('a').get('href').strip()
                 description = card_element.find('p').get_text().strip()
 
-                year_selector = 'div:nth-child(2) > span:nth-child(1)'
-                year_text = card_element.select_one(year_selector).get_text().strip()
-                founding_year = re.search(r'(\d{4})', year_span).group(1)
+                # year_selector = 'div:nth-child(2) > span:nth-child(1)'
+                # year_text = card_element.select_one(year_selector).get_text().strip()
+                # founding_year = re.search(r'(\d{4})', year_span).group(1)
 
                 # TODO: fix funding selector
-                total_funding_text = ''
+                # total_funding_text = ''
                 
-                funding_selector = 'div:nth-child(2) > span:nth-child(2)'
-                total_funding_text = card_element.select_one(funding_selector).get_text().strip()
-                if re.search(r'^Total Funding', total_funding_text)
-                    total_funding = total_funding_text
+                # funding_selector = 'div:nth-child(2) > span:nth-child(2)'
+                # total_funding_text = card_element.select_one(funding_selector).get_text().strip()
+                # if re.search(r'^Total Funding', total_funding_text)
+                #     total_funding = total_funding_text
 
-                span_elements = card_element.find_all_next('span')
-                span_text = [span_element.get_text() for span_element in span_elements]
+                # span_elements = card_element.find_all_next('span')
+                # span_text = [span_element.get_text() for span_element in span_elements]
 
                 DATA_DICT[name] = {
                     'category': category,
@@ -62,11 +62,11 @@ if response.status_code == 200:
                     'name': name,
                     'url': url,
                     'description': description,
-                    'founding_year': founding_year,
-                    'total_funding': total_funding
+                    # 'founding_year': founding_year,
+                    # 'total_funding': total_funding
                 }
 
-                print (f"{name} founded {founding_year} funding: {total_funding}")
+                # print (f"{name} founded {founding_year} funding: {total_funding}")
 
 else:
     print(f"Failed to retrieve the page. Status code: {response.status_code}")
@@ -81,8 +81,8 @@ categories = []
 names = []
 urls = []
 descriptions = []
-founding_years = []
-total_fundings = []
+# founding_years = []
+# total_fundings = []
 
 # Loop over the data dictionary
 for _, item in DATA_DICT.items():
@@ -91,8 +91,8 @@ for _, item in DATA_DICT.items():
     descriptions.append(item['description'])
     categories.append(item['category']),
     subcategories.append(item['subcategory']),
-    founding_years.append(item['founding_year'])
-    total_fundings.append(item['total_funding'])
+    # founding_years.append(item['founding_year'])
+    # total_fundings.append(item['total_funding'])
 
 # Create a Pandas DataFrame
 df = pd.DataFrame({
@@ -100,8 +100,8 @@ df = pd.DataFrame({
     'Subcategory': subcategories,
     'Name': names,
     'URL': urls,
-    'Founding Year': founding_years,
-    'Total Funding': total_fundings,
+    # 'Founding Year': founding_years,
+    # 'Total Funding': total_fundings,
     'Description': descriptions,
 })
 
@@ -109,7 +109,8 @@ df = pd.DataFrame({
 csv_filename = 'output.csv'
 
 # UNCOMMENT THIS LINE TO WRITE DF OUT TO CSV
-# df.to_csv(csv_filename) 
+df.to_csv(csv_filename) 
+# print(f'Data written to {csv_filename}')
 
 # UNCOMMENT THIS SECTION TO WRITE DATA_DICT DIRECTLY TO CSV W/O PD.DF 
 
@@ -130,6 +131,5 @@ csv_filename = 'output.csv'
 #         row = [key, item['name'], item['url'], item['description']]
 #         csv_writer.writerow(row)
 
-# print(f'Data written to {csv_filename}')
  
 
