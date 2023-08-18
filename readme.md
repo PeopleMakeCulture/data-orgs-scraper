@@ -6,6 +6,6 @@ Paste this into your terminal:
 ```
 python3 scraper.py
 ```
-That's it! You sould now have a file called output.csv in your project directory!*  
+That's it! You should now have a file called output.csv in your project directory!*  
 
 *NOTE: You may have to uncomment the code in scraper.py that writes the output to a csv file. 
